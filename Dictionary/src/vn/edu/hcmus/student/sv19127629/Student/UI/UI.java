@@ -69,12 +69,46 @@ public class UI {
         //Create and set up the content pane.
         Container pane = frame.getContentPane();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+
         addAButton("Search slang",null, pane,e ->{
             frame.dispose();
             System.out.println("SEARCH");
         } );
-         addInputField("Test",20,pane);
 
+        addAButton("History",null, pane,e ->{
+            frame.dispose();
+            System.out.println("HISTORY");
+        } );
+
+        addAButton("Add new slangword",null, pane,e ->{
+            frame.dispose();
+            System.out.println("ADD");
+        } );
+
+        addAButton("Edit slangword",null, pane,e ->{
+            frame.dispose();
+            System.out.println("EDIT");
+        } );
+
+        addAButton("Delete slangword",null, pane,e ->{
+            frame.dispose();
+            System.out.println("DELETE");
+        } );
+
+        addAButton("Reset slangword list",null, pane,e ->{
+            frame.dispose();
+            System.out.println("RESET");
+        } );
+
+        addAButton("Funny game 1",null, pane,e ->{
+            frame.dispose();
+            System.out.println("GAME 1");
+        } );
+
+        addAButton("Funny game 2",null, pane,e ->{
+            frame.dispose();
+            System.out.println("GAME 2");
+        } );
         //Display the window.
         frame.pack();
         frame.setVisible(true);
