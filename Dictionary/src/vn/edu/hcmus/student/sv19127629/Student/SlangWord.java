@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Class present the slang word in this program
  */
-public class SlangWord {
+public class SlangWord implements  Comparable<SlangWord>{
     private String name;
     private ArrayList<String> definition = new ArrayList<>();
     public SlangWord(){
@@ -53,5 +53,24 @@ public class SlangWord {
             builder.append(def + " . ");
         }
         return builder.toString();
+    }
+
+
+    @Override
+    public int compareTo(SlangWord o) {
+        char[] w1 = name.toCharArray();
+        char[] w2 =o.getName().toCharArray();
+
+        for (int i = 0; i < w1.length; i++){
+            if (i >= w2.length)
+                return 1;
+            int temp = w1[i] - w2[i];
+            if (temp != 0)
+                return temp;
+
+        }
+        if (w1.length == w2.length)
+            return 0;
+        return -1;
     }
 }

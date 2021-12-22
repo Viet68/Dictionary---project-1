@@ -38,6 +38,8 @@ public class UI {
         JButton button = new JButton(text);
         if (size != null){
             button.setPreferredSize(size);
+        }else{
+            button.setPreferredSize(new Dimension(100,100));
         }
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setActionCommand(text);
@@ -67,9 +69,12 @@ public class UI {
         JFrame frame = init("Student management");
 
         //Create and set up the content pane.
-        Container pane = frame.getContentPane();
-        pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
+        Container mainPane = frame.getContentPane();
+        mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
 
+        JPanel pane = new JPanel();
+        pane.setLayout(new GridLayout(10,2));
+        pane.setPreferredSize(new Dimension(200,400));
         addAButton("Search slang",null, pane,e ->{
             frame.dispose();
             System.out.println("SEARCH");
@@ -109,6 +114,7 @@ public class UI {
             frame.dispose();
             System.out.println("GAME 2");
         } );
+        mainPane.add(pane);
         //Display the window.
         frame.pack();
         frame.setVisible(true);
