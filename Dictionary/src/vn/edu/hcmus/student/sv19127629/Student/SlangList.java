@@ -12,6 +12,9 @@ import java.util.*;
  * Description: a list of slang word
  */
 
+/**
+ *  Class used for compare two slang words by their name
+ */
 class compareNameSlangWord implements Comparator<SlangWord>{
 
     @Override
@@ -33,6 +36,9 @@ class compareNameSlangWord implements Comparator<SlangWord>{
     }
 }
 
+/**
+ * presentation for the Slang list in program
+ */
 public class SlangList {
     public ArrayList<SlangWord> getList() {
         return list;
@@ -68,7 +74,7 @@ public class SlangList {
                     list.add(lastWord);
                 }
             }
-
+            list.sort();
             return list;
         }catch(FileNotFoundException ex){
             System.out.println("Error occurred!");
@@ -79,7 +85,7 @@ public class SlangList {
     public SlangWord findByName(String name){
         int result = Collections.binarySearch(list,new SlangWord(name, ""));
         System.out.println("RE: " + result);
-        if (result == -1)
+        if (result < 0)
             return null;
         return list.get(result);
     }

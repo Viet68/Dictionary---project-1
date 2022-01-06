@@ -1,8 +1,12 @@
 package vn.edu.hcmus.student.sv19127629.Student.UI;
 
+import vn.edu.hcmus.student.sv19127629.Student.SlangList;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * vn.edu.hcmus.student.sv19127629.Student
@@ -11,12 +15,16 @@ import java.awt.event.ActionListener;
  * Description: user interface
  */
 public class UI {
+    protected SlangList list= SlangList.readFromFile("Dictionary/slang.txt");
+
+
     /**
      * initial frame for swing UI
      * @param title : title of UI
      * @return a new frame
      */
     private static JFrame init(String title){
+
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
@@ -27,6 +35,7 @@ public class UI {
     }
 
 
+
     /**
      * create a new button into given container
      * @param text : name of button
@@ -34,21 +43,20 @@ public class UI {
      * @param container : frame or pane includes new button
      * @param listener : action listener for the button
      */
-    protected static void addAButton(String text, Dimension size, Container container, ActionListener listener) {
+    protected static void addAButton(String text, Dimension size, Container container, ActionListener listener,String positon) {
         JPanel pane = new JPanel();
-        pane.setLayout(new BoxLayout(pane,BoxLayout.X_AXIS));
+        pane.setLayout(new FlowLayout());
         pane.setPreferredSize(size);
         JButton button = new JButton(text);
         if (size != null){
             button.setPreferredSize(size);
-        }else{
-            button.setPreferredSize(new Dimension(100,100));
+            button.setMaximumSize(size);
         }
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setActionCommand(text);
         button.addActionListener(listener);
         pane.add(button);
-        container.add(pane);
+        container.add(pane,positon);
     }
 
     /**
@@ -58,11 +66,13 @@ public class UI {
      * @param container : frame or pane
      * @return new text field
      */
-    protected static JTextField addInputField(String labelText,int length, Container container){
+    protected static JTextField addInputField(String labelText,int length, Container container,String position){
+        JPanel panel = new JPanel(new FlowLayout());
         JLabel label = new JLabel(labelText);
         JTextField textField = new JTextField(length);
-        container.add(label);
-        container.add(textField);
+        panel.add(label);
+        panel.add(textField);
+        container.add(panel,position);
         return textField;
     }
 
@@ -70,7 +80,7 @@ public class UI {
      * create and show the new Swing UI to window
      */
     public static JFrame createAndShowGUI() {
-        JFrame frame = init("Student management");
+        JFrame frame = init("Slang words");
 
         //Create and set up the content pane.
         Container mainPane = frame.getContentPane();
@@ -80,55 +90,53 @@ public class UI {
         JPanel topPane = new JPanel();
         topPane.setLayout(new GridLayout(3,3));
         topPane.setPreferredSize(new Dimension(600,300));
-        addAButton("Search slang",new Dimension(200,400), topPane,e ->{
-            frame.dispose();
-            System.out.println("SEARCH");
-        } );
+        addAButton("Search by name",new Dimension(160,80), topPane,e ->{
+            Cards.show("searchByName");
+            System.out.println("SEARCH BY NAME");
+        },null );
 
-        addAButton("History",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Search by definition",new Dimension(160,80), topPane,e ->{
+            Cards.show("searchByDefinition");
+            System.out.println("SEARCH BY definition");
+        } ,null);
+
+        addAButton("History",new Dimension(160,80), topPane,e ->{
             System.out.println("HISTORY");
-        } );
+        },null );
 
-        addAButton("Add new slangword",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Add new slangword",new Dimension(160,80), topPane,e ->{
             System.out.println("ADD");
-        } );
+        },null );
 
-        addAButton("Edit slangword",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Edit slangword",new Dimension(160,80), topPane,e ->{
             System.out.println("EDIT");
-        } );
+        },null );
 
-        addAButton("Delete slangword",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Delete slangword",new Dimension(160,80), topPane,e ->{
             System.out.println("DELETE");
-        } );
+        } ,null);
 
-        addAButton("Reset slangword list",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Reset slangword list",new Dimension(160,80), topPane,e ->{
             System.out.println("RESET");
-        } );
+        },null );
 
-        addAButton("Funny game 1",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Funny game 1",new Dimension(160,80), topPane,e ->{
             System.out.println("GAME 1");
-        } );
+        },null );
 
-        addAButton("Funny game 2",null, topPane,e ->{
-            frame.dispose();
+        addAButton("Funny game 2",new Dimension(160,80), topPane,e ->{
             System.out.println("GAME 2");
-        } );
-
-        JPanel midPane = new JPanel();
-        midPane.setLayout(new BoxLayout(midPane, BoxLayout.LINE_AXIS));
-        addInputField("Input",300,midPane);
+        } ,null);
 
         mainPane.add(topPane,BorderLayout.PAGE_START);
-        mainPane.add(midPane,BorderLayout.CENTER);
+        mainPane.add(Cards.cards,BorderLayout.CENTER);
+
+
+
         //Display the window.
         frame.pack();
         frame.setVisible(true);
         return frame;
     }
+
 }
