@@ -35,6 +35,9 @@ public class UI {
      * @param listener : action listener for the button
      */
     protected static void addAButton(String text, Dimension size, Container container, ActionListener listener) {
+        JPanel pane = new JPanel();
+        pane.setLayout(new BoxLayout(pane,BoxLayout.X_AXIS));
+        pane.setPreferredSize(size);
         JButton button = new JButton(text);
         if (size != null){
             button.setPreferredSize(size);
@@ -44,7 +47,8 @@ public class UI {
         button.setAlignmentX(Component.CENTER_ALIGNMENT);
         button.setActionCommand(text);
         button.addActionListener(listener);
-        container.add(button);
+        pane.add(button);
+        container.add(pane);
     }
 
     /**
@@ -70,51 +74,58 @@ public class UI {
 
         //Create and set up the content pane.
         Container mainPane = frame.getContentPane();
-        mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.Y_AXIS));
+        mainPane.setLayout(new BorderLayout());
+        mainPane.setPreferredSize(new Dimension(600,800));
 
-        JPanel pane = new JPanel();
-        pane.setLayout(new GridLayout(10,2));
-        pane.setPreferredSize(new Dimension(200,400));
-        addAButton("Search slang",null, pane,e ->{
+        JPanel topPane = new JPanel();
+        topPane.setLayout(new GridLayout(3,3));
+        topPane.setPreferredSize(new Dimension(600,300));
+        addAButton("Search slang",new Dimension(200,400), topPane,e ->{
             frame.dispose();
             System.out.println("SEARCH");
         } );
 
-        addAButton("History",null, pane,e ->{
+        addAButton("History",null, topPane,e ->{
             frame.dispose();
             System.out.println("HISTORY");
         } );
 
-        addAButton("Add new slangword",null, pane,e ->{
+        addAButton("Add new slangword",null, topPane,e ->{
             frame.dispose();
             System.out.println("ADD");
         } );
 
-        addAButton("Edit slangword",null, pane,e ->{
+        addAButton("Edit slangword",null, topPane,e ->{
             frame.dispose();
             System.out.println("EDIT");
         } );
 
-        addAButton("Delete slangword",null, pane,e ->{
+        addAButton("Delete slangword",null, topPane,e ->{
             frame.dispose();
             System.out.println("DELETE");
         } );
 
-        addAButton("Reset slangword list",null, pane,e ->{
+        addAButton("Reset slangword list",null, topPane,e ->{
             frame.dispose();
             System.out.println("RESET");
         } );
 
-        addAButton("Funny game 1",null, pane,e ->{
+        addAButton("Funny game 1",null, topPane,e ->{
             frame.dispose();
             System.out.println("GAME 1");
         } );
 
-        addAButton("Funny game 2",null, pane,e ->{
+        addAButton("Funny game 2",null, topPane,e ->{
             frame.dispose();
             System.out.println("GAME 2");
         } );
-        mainPane.add(pane);
+
+        JPanel midPane = new JPanel();
+        midPane.setLayout(new BoxLayout(midPane, BoxLayout.LINE_AXIS));
+        addInputField("Input",300,midPane);
+
+        mainPane.add(topPane,BorderLayout.PAGE_START);
+        mainPane.add(midPane,BorderLayout.CENTER);
         //Display the window.
         frame.pack();
         frame.setVisible(true);
