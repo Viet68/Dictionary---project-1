@@ -33,6 +33,7 @@ public class SearchByNameUI extends UI  implements ActionListener {
         SlangWord f1 = list.findByName(text);
         if (f1 != null){
             textPane.setText(f1.toString());
+            history.add(f1,0);
         }
         else{
             textPane.setText("Slang word does not exist!");

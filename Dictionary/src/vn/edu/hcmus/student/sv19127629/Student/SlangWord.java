@@ -55,6 +55,14 @@ public class SlangWord implements  Comparable<SlangWord>{
         return builder.toString();
     }
 
+    public String toFileString(){
+        StringBuilder builder = new StringBuilder();
+        builder.append(name + "`");
+        for (String def : definition){
+            builder.append(def + "\n");
+        }
+        return builder.toString();
+    }
 
     @Override
     public int compareTo(SlangWord o) {

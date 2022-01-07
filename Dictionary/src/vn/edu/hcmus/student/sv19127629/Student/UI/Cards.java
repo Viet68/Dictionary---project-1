@@ -19,6 +19,9 @@ public class Cards {
         JPanel searchByDefinition = new SearchByDefinitionUI().getUI();
         cards.add(searchByDefinition,"searchByDefinition");
 
+        JPanel history = new HistoryUI().getUI();
+        cards.add(history,"history");
+
     }
 
     public static void show(String name){

@@ -4,9 +4,12 @@ import vn.edu.hcmus.student.sv19127629.Student.SlangList;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * vn.edu.hcmus.student.sv19127629.Student
@@ -15,9 +18,25 @@ import java.awt.event.ItemListener;
  * Description: user interface
  */
 public class UI {
-    protected SlangList list= SlangList.readFromFile("Dictionary/slang.txt");
+    protected static SlangList list = null;
+    protected static SlangList history =null;
+    public UI(){
+        list = SlangList.readFromFile("Dictionary/sortedSlang.txt");
+        if (list == null){
+            list = SlangList.readFromFile("Dictionary/slang.txt");
+            list.sort();
+        }
+        File historyFile = new File("Dictionary/History.txt");
+        if (!historyFile.exists()){
+            try{
+                historyFile.createNewFile();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
 
-
+        history = SlangList.readFromFile("Dictionary/History.txt");
+    }
     /**
      * initial frame for swing UI
      * @param title : title of UI
@@ -43,7 +62,7 @@ public class UI {
      * @param container : frame or pane includes new button
      * @param listener : action listener for the button
      */
-    protected static void addAButton(String text, Dimension size, Container container, ActionListener listener,String positon) {
+    protected static void addAButton(String text, Dimension size, Container container, ActionListener listener,String position ) {
         JPanel pane = new JPanel();
         pane.setLayout(new FlowLayout());
         pane.setPreferredSize(size);
@@ -56,7 +75,7 @@ public class UI {
         button.setActionCommand(text);
         button.addActionListener(listener);
         pane.add(button);
-        container.add(pane,positon);
+        container.add(pane,position);
     }
 
     /**
@@ -92,16 +111,14 @@ public class UI {
         topPane.setPreferredSize(new Dimension(600,300));
         addAButton("Search by name",new Dimension(160,80), topPane,e ->{
             Cards.show("searchByName");
-            System.out.println("SEARCH BY NAME");
         },null );
 
         addAButton("Search by definition",new Dimension(160,80), topPane,e ->{
             Cards.show("searchByDefinition");
-            System.out.println("SEARCH BY definition");
         } ,null);
 
         addAButton("History",new Dimension(160,80), topPane,e ->{
-            System.out.println("HISTORY");
+            Cards.show("history");
         },null );
 
         addAButton("Add new slangword",new Dimension(160,80), topPane,e ->{
@@ -131,7 +148,17 @@ public class UI {
         mainPane.add(topPane,BorderLayout.PAGE_START);
         mainPane.add(Cards.cards,BorderLayout.CENTER);
 
+        addAButton("EXIT",null,mainPane,new ActionListener(){
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                history.save("Dictionary/History.txt",10);
+                list.save("Dictionary/sortedSlang.txt");
+                System.exit(0); // stop program
+                frame.dispose(); // close window
+                frame.setVisible(false); // hide window
+            }
+        },BorderLayout.PAGE_END);
 
         //Display the window.
         frame.pack();

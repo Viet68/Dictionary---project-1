@@ -1,8 +1,6 @@
 package vn.edu.hcmus.student.sv19127629.Student;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -54,12 +52,54 @@ public class SlangList {
     public void add(SlangWord word){
         list.add(word);
     }
+    public void add(SlangWord word,int pos){
+        if (pos<0 || pos >= list.size()){
+            return;
+        }
+        list.add(pos,word);
+    }
+
     public void sort(){
         Collections.sort(list, new compareNameSlangWord());
     }
+    public void save(String fileName){
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(fileName), "utf-8"));
+            for (SlangWord word : list){
+                writer.write(word.toFileString());
+            }
+            writer.close();
+        } catch (IOException ex) {
+            // Report
+            ex.printStackTrace();
+        }
+
+    }
+
+    public void save(String fileName, int size){
+        BufferedWriter writer;
+        try {
+            writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream(fileName), "utf-8"));
+
+            for (int i = 0 ; i <list.size() && i <size;i++){
+                writer.write(list.get(i).toFileString());
+            }
+            writer.close();
+        } catch (IOException ex) {
+            // Report
+            ex.printStackTrace();
+        }
+
+    }
+
     public static SlangList readFromFile(String fileName){
         try{
             File f = new File(fileName);
+            if (!f.exists())
+                return null;
             Scanner scan = new Scanner(f);
             String line;
             SlangWord lastWord = new SlangWord("t","test");
@@ -74,7 +114,6 @@ public class SlangList {
                     list.add(lastWord);
                 }
             }
-            list.sort();
             return list;
         }catch(FileNotFoundException ex){
             System.out.println("Error occurred!");
@@ -82,6 +121,9 @@ public class SlangList {
         }
 
     }
+
+
+
     public SlangWord findByName(String name){
         int result = Collections.binarySearch(list,new SlangWord(name, ""));
         System.out.println("RE: " + result);
