@@ -48,7 +48,9 @@ public class SlangList {
 
     private ArrayList<SlangWord> list = new ArrayList<>();
     public  SlangList(){}
-
+    public int size(){
+        return list.size();
+    }
     public void add(SlangWord word){
         list.add(word);
     }
@@ -58,7 +60,26 @@ public class SlangList {
         }
         list.add(pos,word);
     }
+    public void delete(int index){
+        if (index<0 || index >= list.size()){
+            return;
+        }
+        list.remove(index);
+    }
 
+    public SlangWord get(int index){
+        if (index<0 || index >= list.size()){
+            return null;
+        }
+        return list.get(index);
+    }
+
+    public void set(int index,SlangWord newSlang){
+        if (index<0 || index >= list.size()){
+            return;
+        }
+        list.set(index,newSlang);
+    }
     public void sort(){
         Collections.sort(list, new compareNameSlangWord());
     }
@@ -122,7 +143,10 @@ public class SlangList {
 
     }
 
-
+    public int findIndexByName(String name){
+        int result = Collections.binarySearch(list,new SlangWord(name, ""));
+        return result;
+    }
 
     public SlangWord findByName(String name){
         int result = Collections.binarySearch(list,new SlangWord(name, ""));

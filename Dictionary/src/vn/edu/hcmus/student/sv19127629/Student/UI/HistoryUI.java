@@ -1,6 +1,5 @@
 package vn.edu.hcmus.student.sv19127629.Student.UI;
 
-import vn.edu.hcmus.student.sv19127629.Student.SlangList;
 import vn.edu.hcmus.student.sv19127629.Student.SlangWord;
 
 import javax.swing.*;

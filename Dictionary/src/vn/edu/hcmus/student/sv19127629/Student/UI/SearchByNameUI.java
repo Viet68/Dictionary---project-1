@@ -37,6 +37,7 @@ public class SearchByNameUI extends UI  implements ActionListener {
         }
         else{
             textPane.setText("Slang word does not exist!");
+            JOptionPane.showMessageDialog(frame,"Your entered slang words does not exist!","FAILED",JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

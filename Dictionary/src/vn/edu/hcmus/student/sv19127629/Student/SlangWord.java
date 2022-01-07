@@ -42,6 +42,11 @@ public class SlangWord implements  Comparable<SlangWord>{
     public void setDefinition(ArrayList<String> definition) {
         this.definition = definition;
     }
+    public void setDefinition(String definition) {
+        ArrayList<String> newList = new ArrayList<>();
+        newList.add(definition);
+        this.definition = newList;
+    }
     public void addDefinition(String definition){
         this.definition.add(definition);
     }

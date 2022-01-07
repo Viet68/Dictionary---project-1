@@ -20,6 +20,7 @@ import java.io.IOException;
 public class UI {
     protected static SlangList list = null;
     protected static SlangList history =null;
+    protected static JFrame frame = null;
     public UI(){
         list = SlangList.readFromFile("Dictionary/sortedSlang.txt");
         if (list == null){
@@ -48,8 +49,8 @@ public class UI {
         JFrame.setDefaultLookAndFeelDecorated(true);
 
         //Create and set up the window.
-        JFrame frame = new JFrame(title);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame = new JFrame(title);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         return frame;
     }
 
@@ -122,23 +123,26 @@ public class UI {
         },null );
 
         addAButton("Add new slangword",new Dimension(160,80), topPane,e ->{
-            System.out.println("ADD");
+            Cards.show("addNewSlang");
         },null );
 
         addAButton("Edit slangword",new Dimension(160,80), topPane,e ->{
-            System.out.println("EDIT");
+            Cards.show("editSlang");
         },null );
 
         addAButton("Delete slangword",new Dimension(160,80), topPane,e ->{
-            System.out.println("DELETE");
+            Cards.show("deleteSlang");
         } ,null);
 
         addAButton("Reset slangword list",new Dimension(160,80), topPane,e ->{
-            System.out.println("RESET");
+            list = SlangList.readFromFile("Dictionary/slang.txt");
+            list.sort();
+            Cards.show(null,"RESET SLANG LIST SUCCESSFUL!");
+            JOptionPane.showMessageDialog(frame,"Reset slang list successful!","SUCCESS",JOptionPane.INFORMATION_MESSAGE);
         },null );
 
         addAButton("Funny game 1",new Dimension(160,80), topPane,e ->{
-            System.out.println("GAME 1");
+            Cards.show("game1");
         },null );
 
         addAButton("Funny game 2",new Dimension(160,80), topPane,e ->{
